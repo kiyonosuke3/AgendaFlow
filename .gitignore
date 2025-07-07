@@ -1,0 +1,5 @@
+build/
+cmds/
+release/
+venv/
+AgendaFlow.spec
