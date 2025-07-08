@@ -1,94 +1,98 @@
 # AgendaFlow
 
-AgendaFlowは、Fletフレームワークを使用して構築されたシンプルで使いやすいタスク管理アプリケーションです。複数のプロジェクト管理、重要度の設定、テーマカスタマイズなどの機能を備えています。
+AgendaFlow is a simple and easy-to-use task management application built with the Flet framework. It supports multiple project management, importance tagging, theme customization, and more.
 
-## 機能
+<img src="media/screenshot1.png" width="70%"/>
 
-### 基本機能
-- **タスク管理**: メモの追加、編集、削除
-- **タスク完了**: スワイプ操作で簡単に完了/未完了を切り替え
-- **重要度設定**: 重要なタスクにスターマークを付与（最大6件）
-- **プロジェクト管理**: 複数のプロジェクトを作成・管理
-- **データ永続化**: 設定とタスクデータを自動保存
+## Features
 
-### UI/UX機能
-- **スワイプ操作**: 
-  - 左から右へスワイプ：タスクの完了/未完了切り替え
-  - 右から左へスワイプ：タスクの削除
-- **テーマカスタマイズ**: ライト/ダークモード切り替え
-- **カラーテーマ**: 10種類のカラーテーマから選択
-- **自動ソート**: 重要→通常→完了済みの順に自動整理
+### Core Features
+- **Task Management**: Add, edit, and delete memos/tasks
+- **Task Completion**: Easily toggle completion status with swipe actions
+- **Importance Tagging**: Mark important tasks with a star (up to 6)
+- **Project Management**: Create and manage multiple projects
+- **Data Persistence**: Automatically saves settings and task data
 
-## インストール方法
+### UI/UX Features
+- **Swipe Actions**:  
+  - Left-to-right swipe: Complete/un-complete task  
+  - Right-to-left swipe: Delete task
+- **Theme Customization**: Switch between light and dark modes
+- **Color Themes**: Choose from 10 color themes
+- **Auto Sorting**: Tasks are automatically sorted — Important → Normal → Completed
 
-### 必要な依存関係
+## Installation
+
+### Required Dependencies
+
 ```bash
 pip install flet
 ```
 
-### アプリケーションの実行
+### How to Run
+
 ```bash
 python agendaflow.py
 ```
 
-## 使用方法
+## Usage
 
-### 基本操作
-1. **タスクの追加**: 入力欄にメモを入力してEnterキーまたは「追加」ボタンをクリック
-2. **タスクの編集**: タスクのテキスト部分をクリックして直接編集
-3. **重要度の設定**: 星アイコンをクリックして重要度を設定/解除
-4. **タスクの完了**: タスクを左にスワイプして完了確認ダイアログを表示
-5. **タスクの削除**: タスクを右にスワイプして削除確認ダイアログを表示
+### Basic Operations
+1. **Add Task**: Enter your memo in the input box and press Enter or click the "Add" button
+2. **Edit Task**: Click the task text to edit directly
+3. **Set Importance**: Click the star icon to mark/unmark as important
+4. **Complete Task**: Swipe the task left to show the complete confirmation dialog
+5. **Delete Task**: Swipe the task right to show the delete confirmation dialog
 
-### プロジェクト管理
-- **新規プロジェクト**: 「+」ボタンをクリックして新しいプロジェクトを作成
-- **プロジェクト削除**: 「削除」ボタンをクリックして現在のプロジェクトを削除
-- **プロジェクト切り替え**: ドロップダウンメニューから任意のプロジェクトを選択
+### Project Management
+- **Create New Project**: Click the "+" button to create a new project
+- **Delete Project**: Click the "Delete" button to remove the current project
+- **Switch Projects**: Select a project from the dropdown menu
 
-### 設定カスタマイズ
-1. 右下のフローティングアクションボタン（設定アイコン）をクリック
-2. **テーマカラー**: 10種類のカラーテーマから選択
-3. **表示モード**: ライト/ダークモードを切り替え
+### Settings Customization
+1. Click the floating action button (gear icon) in the lower right corner
+2. **Theme Color**: Choose from 10 color themes
+3. **Display Mode**: Switch between light and dark modes
 
-## データ保存場所
+## Data Storage
 
 ### Windows
 ```
 %LOCALAPPDATA%\AgendaFlow\
-├── settings.json          # アプリケーション設定
-└── todos_[プロジェクト名].json  # プロジェクトごとのタスクデータ
+├── settings.json            # Application settings
+└── todos_[projectname].json # Task data per project
 ```
 
 ### macOS/Linux
 ```
 ~/AgendaFlow/
-├── settings.json          # アプリケーション設定
-└── todos_[プロジェクト名].json  # プロジェクトごとのタスクデータ
+├── settings.json            # Application settings
+└── todos_[projectname].json # Task data per project
 ```
 
-## 技術仕様
+## Technical Details
 
-### アーキテクチャ
-- **UI フレームワーク**: Flet (Flutter for Python)
-- **データ形式**: JSON
-- **設定管理**: ファイルベースの永続化
-- **テーマシステム**: Material Design準拠
+### Architecture
+- **UI Framework**: Flet (Flutter for Python)
+- **Data Format**: JSON
+- **Settings Management**: File-based persistence
+- **Theming**: Material Design compliant
 
-### 主要クラス
-- **AgendaFlowApp**: メインアプリケーションクラス
-- **SettingsManager**: アプリケーション設定の管理
-- **TodoManager**: タスクデータの管理
+### Key Classes
+- **AgendaFlowApp**: Main application class
+- **SettingsManager**: Manages application settings
+- **TodoManager**: Manages task data
 
-### サポート機能
-- **マルチライン対応**: 長いテキストの自動折り返し
-- **リアルタイム保存**: 編集内容の自動保存
-- **確認ダイアログ**: 重要な操作時の確認機能
+### Additional Features
+- **Multiline Support**: Automatic wrapping for long text
+- **Real-time Saving**: Edits are saved automatically
+- **Confirmation Dialogs**: Confirmation for critical operations
 
-## カスタマイズ
+## Customization
 
-### テーマカラー
-以下の10種類のカラーテーマが利用可能です：
-- BLUE（デフォルト）
+### Theme Colors
+Ten color themes are available:
+- BLUE (default)
 - RED
 - GREEN
 - PINK
@@ -99,8 +103,8 @@ python agendaflow.py
 - CYAN
 - TEAL
 
-### 設定のカスタマイズ
-`DEFAULT_SETTINGS`辞書を編集することで、デフォルト設定を変更できます：
+### Change Default Settings
+Edit the `DEFAULT_SETTINGS` dictionary in your code to change defaults:
 
 ```python
 DEFAULT_SETTINGS = {
@@ -110,28 +114,40 @@ DEFAULT_SETTINGS = {
 }
 ```
 
-## トラブルシューティング
+## Troubleshooting
 
-### よくある問題
-1. **アプリが起動しない**: Fletがインストールされているか確認
-2. **データが保存されない**: 書き込み権限があるか確認
-3. **重要タスクが設定できない**: 既に6件の重要タスクがある場合は制限
+### Common Issues
+1. **App won’t start**: Make sure Flet is installed
+2. **Data not saving**: Check for write permissions
+3. **Cannot mark important tasks**: The limit is 6 important tasks
 
-### ログとデバッグ
-エラーが発生した場合は、コンソール出力を確認してください。
+### Logs & Debugging
+Check the console output when errors occur.
 
-## ライセンス
+## License
 
-このプロジェクトは個人利用・学習目的で作成されています。
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
 
-## 貢献
+## Third-party libraries
 
-バグ報告や機能要求は、GitHubのIssuesページで受け付けています。
+- Flet (MIT License)
+  - Copyright (c) 2022-present, Flet Contributors
+  - See LICENSE_flet.txt for details.
 
-## 更新履歴
+## Contribution
 
-- v1.0.0: 初期リリース
-  - 基本的なタスク管理機能
-  - プロジェクト管理機能
-  - テーマカスタマイズ機能
-  - スワイプ操作対応
+Bug reports and feature requests are welcome via GitHub Issues.
+
+## Release Notes
+
+- v1.2: refined GUI
+  - looks good in dark mode
+  - refactored all code
+
+- v1.1: Added some features
+  - Theme customization support
+  - Swipe action support
+
+- v1.0: Initial release
+  - Basic task management
+  - Project management
