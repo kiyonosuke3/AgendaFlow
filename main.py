@@ -110,20 +110,20 @@ class AgendaFlowApp:
     def setup_components(self):
         dark_mode = self.settings.get_theme_mode() == "DARK"
         theme_color = self.settings.get_theme_color()
-        self.input_box = ft.TextField(expand=True, multiline=True, min_lines=1, hint_text="メモ内容", filled=dark_mode)
-        self.add_btn = ft.ElevatedButton("+ 追加", width=70)
+        self.input_box = ft.TextField(expand=True, multiline=True, min_lines=1, hint_text="Memo", filled=dark_mode)
+        self.add_btn = ft.ElevatedButton("+ Add", width=70)
         self.proj_dd = ft.Dropdown(
             options=[ft.dropdown.Option(p) for p in self.projects],
             value=self.current_project,
             width=200,
-            filled=False,  # 常にFalse
-            border=ft.InputBorder.NONE,  # 常にボーダーなし
+            filled=False,  # Always False
+            border=ft.InputBorder.NONE,  # Always no border
         )
         self.mode_btn = ft.IconButton(
             icon=ft.Icons.DARK_MODE, selected_icon=ft.Icons.LIGHT_MODE, selected=dark_mode, data="theme"
         )
         self.color_dd = ft.Dropdown(
-            label="テーマ色",
+            label="Theme Color",
             options=[ft.dropdown.Option(k) for k in self.THEME_COLORS.keys()],
             value=theme_color,
             width=120,
@@ -148,11 +148,9 @@ class AgendaFlowApp:
                             ft.Container(expand=True),
                             ft.Row(
                                 [
+                                    ft.IconButton(icon=ft.Icons.ADD, tooltip="Add Project", on_click=self.add_proj),
                                     ft.IconButton(
-                                        icon=ft.Icons.ADD, tooltip="プロジェクト追加", on_click=self.add_proj
-                                    ),
-                                    ft.IconButton(
-                                        icon=ft.Icons.DELETE, tooltip="プロジェクト削除", on_click=self.del_proj
+                                        icon=ft.Icons.DELETE, tooltip="Delete Project", on_click=self.del_proj
                                     ),
                                 ],
                                 alignment=ft.MainAxisAlignment.END,
@@ -168,7 +166,7 @@ class AgendaFlowApp:
             )
         )
         self.page.floating_action_button = ft.FloatingActionButton(
-            icon=ft.Icons.SETTINGS, mini=True, tooltip="設定", on_click=self.open_setting
+            icon=ft.Icons.SETTINGS, mini=True, tooltip="Settings", on_click=self.open_setting
         )
 
     def setup_bindings(self):
@@ -189,7 +187,7 @@ class AgendaFlowApp:
 
     def update_filled(self):
         dark = self.mode_btn.selected
-        self.input_box.filled = dark  # ダークだけTrue
+        self.input_box.filled = dark  # Only True if dark
         self.color_dd.filled = dark
 
     def update_project_dropdown(self):
@@ -220,7 +218,7 @@ class AgendaFlowApp:
             )
             self.tf_states[idx] = t["text"]
             done_info = (
-                ft.Text(f"完了日時: {t['done_date']}", color=fg, size=12)
+                ft.Text(f"Completed: {t['done_date']}", color=fg, size=12)
                 if is_done and t.get("done_date")
                 else ft.Container()
             )
@@ -231,7 +229,7 @@ class AgendaFlowApp:
                             [
                                 ft.IconButton(
                                     icon=ft.Icons.STAR if is_imp else ft.Icons.STAR_BORDER,
-                                    tooltip="重要" if not is_imp else "解除",
+                                    tooltip="Important" if not is_imp else "Remove",
                                     disabled=is_done,
                                     on_click=lambda e, ix=idx: self.on_imp_toggle(ix),
                                 ),
@@ -249,7 +247,7 @@ class AgendaFlowApp:
                 padding=10,
             )
 
-            # Dismissibleの追加：行コンテナをラップ
+            # Add Dismissible: wrap row container
             def make_on_confirm_dismiss(ix):
                 def on_confirm_dismiss(e):
                     direction = e.direction
@@ -269,7 +267,7 @@ class AgendaFlowApp:
                             def cancel_():
                                 cb_dismiss(False)
 
-                            self.open_confirm_dialog("完了にしますか？", "このメモを完了状態にします。", ok_, cancel_)
+                            self.open_confirm_dialog("Mark as complete?", "Set this memo as completed.", ok_, cancel_)
                         else:
 
                             def ok_():
@@ -280,7 +278,7 @@ class AgendaFlowApp:
                                 cb_dismiss(False)
 
                             self.open_confirm_dialog(
-                                "未完了にもどしますか？", "このメモを未完了状態に戻します。", ok_, cancel_
+                                "Mark as incomplete?", "Return this memo to incomplete state.", ok_, cancel_
                             )
                     elif direction == ft.DismissDirection.END_TO_START:
 
@@ -291,7 +289,7 @@ class AgendaFlowApp:
                         def cancel_():
                             cb_dismiss(False)
 
-                        self.open_confirm_dialog("削除しますか？", "このメモを削除します。", ok_, cancel_)
+                        self.open_confirm_dialog("Delete memo?", "Delete this memo.", ok_, cancel_)
                     else:
                         cb_dismiss(False)
 
@@ -333,7 +331,7 @@ class AgendaFlowApp:
         else:
             count = sum(1 for t in self.todos if t.get("important") and not t.get("done"))
             if count >= 6:
-                self.page.open(ft.SnackBar(ft.Text("重要メモは6件まで指定できます")))
+                self.page.open(ft.SnackBar(ft.Text("Max 6 important memos")))
                 self.page.update()
                 return
             todo["important"] = True
@@ -377,7 +375,7 @@ class AgendaFlowApp:
             content=ft.Text(content),
             actions=[
                 ft.TextButton(
-                    "キャンセル", on_click=lambda e: (on_cancel() if on_cancel else None, self.page.close(dialog))
+                    "Cancel", on_click=lambda e: (on_cancel() if on_cancel else None, self.page.close(dialog))
                 ),
                 ft.ElevatedButton("OK", on_click=lambda e: (on_ok(), self.page.close(dialog))),
             ],
@@ -400,12 +398,12 @@ class AgendaFlowApp:
         self.update_todo_list()
 
     def add_proj(self, e=None):
-        inp = ft.TextField(label="新規プロジェクト名", width=250, filled=self.mode_btn.selected)
+        inp = ft.TextField(label="New project name", width=250, filled=self.mode_btn.selected)
 
         def ok(ev):
             name = inp.value.strip()
             if not name or name in self.settings.get("projects"):
-                self.page.open(ft.SnackBar(ft.Text("新しい名称を入れてください。")))
+                self.page.open(ft.SnackBar(ft.Text("Please input a new name.")))
                 return
             projs = self.settings.get("projects")
             projs.append(name)
@@ -418,11 +416,11 @@ class AgendaFlowApp:
             self.page.close(dialog)
 
         dialog = ft.AlertDialog(
-            title=ft.Text("プロジェクト追加"),
+            title=ft.Text("Add Project"),
             content=inp,
             actions=[
-                ft.ElevatedButton("追加", on_click=ok),
-                ft.TextButton("キャンセル", on_click=lambda e: self.page.close(dialog)),
+                ft.ElevatedButton("Add", on_click=ok),
+                ft.TextButton("Cancel", on_click=lambda e: self.page.close(dialog)),
             ],
             actions_alignment="end",
         )
@@ -430,7 +428,7 @@ class AgendaFlowApp:
 
     def del_proj(self, e=None):
         if self.current_project == "Default":
-            self.page.open(ft.SnackBar(ft.Text("Defaultは削除不可")))
+            self.page.open(ft.SnackBar(ft.Text("Default cannot be deleted")))
             return
 
         def do_del(ev):
@@ -454,11 +452,11 @@ class AgendaFlowApp:
             self.page.close(dialog)
 
         dialog = ft.AlertDialog(
-            title=ft.Text("削除確認"),
-            content=ft.Text(f"「{self.current_project}」を削除？"),
+            title=ft.Text("Delete Confirmation"),
+            content=ft.Text(f'Delete "{self.current_project}"?'),
             actions=[
-                ft.ElevatedButton("削除", on_click=do_del),
-                ft.TextButton("キャンセル", on_click=lambda e: self.page.close(dialog)),
+                ft.ElevatedButton("Delete", on_click=do_del),
+                ft.TextButton("Cancel", on_click=lambda e: self.page.close(dialog)),
             ],
             actions_alignment="end",
         )
@@ -466,9 +464,9 @@ class AgendaFlowApp:
 
     def open_setting(self, e=None):
         d = ft.AlertDialog(
-            title=ft.Text("表示設定"),
+            title=ft.Text("Display Settings"),
             content=ft.Row([self.color_dd, self.mode_btn]),
-            actions=[ft.TextButton("閉じる", on_click=lambda e: self.page.close(d))],
+            actions=[ft.TextButton("Close", on_click=lambda e: self.page.close(d))],
             actions_alignment="end",
         )
         self.page.open(d)
